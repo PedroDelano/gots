@@ -88,9 +88,6 @@ func (m1 *Matrix) MatrixMult(m2 Matrix) (Matrix, error) {
 
 }
 
-// TODO:
-// - Inverse a matrix
-
 // Utils
 
 func (m Matrix) Print() {
