@@ -1,6 +1,9 @@
 package matrix
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type Matrix struct {
 	nrow int
@@ -59,6 +62,34 @@ func (m *Matrix) Transpose() Matrix {
 
 	return tm
 }
+
+func (m1 *Matrix) MatrixMult(m2 Matrix) (Matrix, error) {
+
+	if m1.ncol != m2.nrow {
+		return Matrix{}, errors.New("matrix: can only multiply a matrix (m, n) by another (n, p)")
+	}
+
+	m3 := New(m1.nrow, m2.ncol)
+
+	// could be m2.nrow as well
+	n := m1.ncol
+
+	for i := range m1.nrow {
+		for j := range m2.ncol {
+			curr := 0.0
+			for k := range n {
+				curr += (m1.data[i][k] * m2.data[k][j])
+			}
+			m3.data[i][j] = curr
+		}
+	}
+
+	return m3, nil
+
+}
+
+// TODO:
+// - Inverse a matrix
 
 // Utils
 
